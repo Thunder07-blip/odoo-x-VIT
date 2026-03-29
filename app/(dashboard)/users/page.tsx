@@ -91,9 +91,10 @@ export default function UsersPage() {
   };
 
   const handleSendPassword = async (userId: string, email: string) => {
-    const pwd = window.prompt(`Enter the temporary password to send to ${email}:`);
-    if (!pwd) return;
     setSendingEmailId(userId);
+    // Auto-generate a secure random password
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$";
+    const pwd = Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
     try {
       const res = await fetch("/api/users/send-password", {
         method: "POST",
@@ -102,7 +103,7 @@ export default function UsersPage() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
-      toast.success(json.message);
+      toast.success(`Auto-generated password sent to ${email}!`);
     } catch (err: any) { toast.error(err.message || "Failed to send email"); }
     finally { setSendingEmailId(null); }
   };
