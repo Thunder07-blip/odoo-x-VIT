@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ExpenseFlow: The GenAI Expense Workflow Matrix 🚀
 
-## Getting Started
+**ExpenseFlow** is a comprehensive B2B SaaS platform specifically architected for automating complex organizational expense reporting through **Gemini Multi-Key Vision AI** pipelines and dynamic programmatic Approval Engine architectures.
 
-First, run the development server:
+### 🌟 Key Objectives Solved
+1. **Intelligent Capture (OCR)**: Integrates Google's `Gemini 1.5` Vision models to instantly scan messy receipt image uploads, securely extracting metadata (Vendor, Price, Date, Category) with robust multi-apikey rate-limit failovers guaranteeing 100% demo uptime constraints.
+2. **Hierarchical Engine Processing**: Instead of static endpoints, the backend configures `Sequential` vs `Parallel` execution chains driven natively through Postgres relational nodes forcing dynamic threshold overrides.
+3. **Admin Telemetry & Routing Control**: Evaluates organizational node tracking mapping execution health visually, and explicitly routing secure API calls guarding unprivileged views continuously.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🧱 Architecture & Tech Stack
+- **Framework**: Next.js 14 App Router (React)
+- **Database**: PostgreSQL mapped securely via Prisma ORM on Neon.tech scale servers.
+- **AI Core**: Google Gemini Multi-Key Failover Engine
+- **Auth**: Stateless JSON Web Token (`JWT`) explicit cookie routing.
+- **UI System**: Tailwind CSS mapped via curated SaaS visual components (Lucide, Sonner)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔐 Interactive Roles
+The system provisions exact behaviors evaluating identity contexts:
+- **Admin**: Configures Approval node chains globally, deeply parses KPI Analytics, and actively provisions workspaces organically.
+- **Manager**: Evaluates assigned queue items interactively and overrides actions seamlessly passing data upwards via rule configurations.
+- **Employee**: Drags and drops raw receipts natively automating structured Data schemas directly into accounting pipelines securely.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> *We're incredibly proud of this execution flow mapping complex enterprise logic into simple elegant frontend matrices. Thank you for evaluating our project!*
