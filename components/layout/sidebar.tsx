@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { LayoutDashboard, Receipt, CheckSquare, Users, Settings, BarChart } from "lucide-react";
+import { LayoutDashboard, Receipt, CheckSquare, Users, Settings, BarChart, Sparkles } from "lucide-react";
 
 export function Sidebar({ role }: { role: string }) {
   const pathname = usePathname();
@@ -15,11 +14,9 @@ export function Sidebar({ role }: { role: string }) {
   if (role !== "ADMIN") {
     links.push({ name: "My Expenses", href: "/expenses", icon: Receipt });
   }
-
   if (role === "MANAGER" || role === "ADMIN") {
     links.push({ name: "Approvals", href: "/approvals", icon: CheckSquare });
   }
-
   if (role === "ADMIN") {
     links.push({ name: "Users", href: "/users", icon: Users });
     links.push({ name: "Approval Rules", href: "/rules", icon: Settings });
@@ -27,31 +24,38 @@ export function Sidebar({ role }: { role: string }) {
   }
 
   return (
-    <aside className="w-[240px] bg-white border-r border-slate-200 h-screen fixed top-0 left-0 flex flex-col z-20">
-      <div className="h-16 flex items-center px-6 border-b border-slate-100 font-bold text-xl text-primary">
-        ExpenseFlow
+    <aside className="w-[260px] h-screen fixed top-0 left-0 flex flex-col z-20 bg-white"
+      style={{ borderRight: '1px solid rgba(0,0,0,0.05)' }}>
+      {/* Logo */}
+      <div className="h-[72px] flex items-center gap-3 px-7">
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white"
+          style={{ background: 'var(--gradient-primary)' }}>
+          <Sparkles className="w-5 h-5" />
+        </div>
+        <span className="font-bold text-[18px] text-slate-800 tracking-tight">ExpenseFlow</span>
       </div>
-      <nav className="flex-1 p-4 space-y-1">
+
+      {/* Navigation */}
+      <nav className="flex-1 px-4 pt-2 space-y-1">
+        <p className="px-3 mb-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-400">Menu</p>
         {links.map((link) => {
-          const isActive = pathname === link.href;
+          const isActive = pathname === link.href || (link.href !== "/dashboard" && pathname.startsWith(link.href));
           const Icon = link.icon;
           return (
-            <Link
-              key={link.name}
-              href={link.href}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
-                isActive 
-                  ? "bg-slate-100 text-primary font-bold" 
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium"
-              )}
-            >
-              <Icon className="w-5 h-5 opacity-80" />
+            <Link key={link.name} href={link.href}
+              className={`sidebar-link ${isActive ? 'sidebar-link-active' : ''}`}>
+              <Icon className="w-[18px] h-[18px]" style={{ opacity: isActive ? 1 : 0.7 }} />
               {link.name}
             </Link>
           );
         })}
       </nav>
+
+      {/* Footer */}
+      <div className="p-4 mx-4 mb-4 rounded-2xl" style={{ background: 'var(--gradient-card)' }}>
+        <p className="text-[11px] font-medium text-slate-400">ExpenseFlow v2.0</p>
+        <p className="text-[10px] text-slate-300 mt-0.5">AI-Powered Expense Platform</p>
+      </div>
     </aside>
   );
 }

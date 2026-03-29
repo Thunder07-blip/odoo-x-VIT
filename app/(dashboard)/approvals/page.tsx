@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/utils";
-import { Loader2, Check, X } from "lucide-react";
+import { Loader2, Check, X, CheckSquare } from "lucide-react";
 
 export default function ApprovalsPage() {
   const [approvals, setApprovals] = useState<any[]>([]);
@@ -40,49 +40,70 @@ export default function ApprovalsPage() {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
-      <h1 className="text-2xl font-bold text-slate-800">Pending Approvals</h1>
-      <p className="text-sm text-slate-500 mb-6">Review and resolve claims routed to your queue.</p>
+    <div className="space-y-6 animate-fade-in stagger">
+      <div className="page-header">
+        <h1>Pending Approvals</h1>
+        <p>Review and resolve claims routed to your queue.</p>
+      </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="card overflow-hidden">
         {loading ? (
-          <div className="p-12 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-slate-400" /></div>
+          <div className="p-16 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary opacity-50" /></div>
         ) : approvals.length === 0 ? (
-          <div className="p-12 text-center text-slate-500">You're all caught up! No pending approvals.</div>
+          <div className="p-20 text-center flex flex-col items-center justify-center">
+            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-4 text-green-400">
+              <CheckSquare className="w-8 h-8" />
+            </div>
+            <h3 className="text-[18px] font-bold text-slate-800 mb-1">You're all caught up!</h3>
+            <p className="text-[14px] text-slate-400">There are no pending approvals in your queue right now.</p>
+          </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm whitespace-nowrap">
-              <thead className="bg-slate-50 border-b border-slate-200 text-slate-500">
+            <table className="table-premium">
+              <thead>
                 <tr>
-                  <th className="px-6 py-3 font-medium">Employee</th>
-                  <th className="px-6 py-3 font-medium">Description</th>
-                  <th className="px-6 py-3 font-medium">Category</th>
-                  <th className="px-6 py-3 font-medium">Date</th>
-                  <th className="px-6 py-3 font-medium">Amount</th>
-                  <th className="px-6 py-3 font-medium text-right">Actions</th>
+                  <th>Employee</th>
+                  <th>Request Details</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th className="text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody>
                 {approvals.map(approval => {
                   const exp = approval.expense;
                   const isActing = acting === exp.id;
+                  
                   return (
-                    <tr key={approval.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-6 py-4 font-medium text-slate-900">
-                         <div className="font-semibold">{exp.employee.name}</div>
-                         <div className="text-xs text-slate-500">{exp.employee.email}</div>
+                    <tr key={approval.id}>
+                      <td>
+                         <div className="font-semibold text-slate-800">{exp.employee.name}</div>
+                         <div className="text-[12px] text-slate-400 mt-0.5">{exp.employee.email}</div>
                       </td>
-                      <td className="px-6 py-4 font-medium text-slate-700 max-w-[200px] truncate" title={exp.description}>{exp.description}</td>
-                      <td className="px-6 py-4 text-slate-500">{exp.category}</td>
-                      <td className="px-6 py-4 text-slate-500">{new Date(exp.date).toLocaleDateString()}</td>
-                      <td className="px-6 py-4 font-bold">{formatCurrency(exp.amountConverted)}</td>
-                      <td className="px-6 py-4 text-right">
+                      <td>
+                        <div className="font-medium text-slate-700 max-w-[200px] truncate" title={exp.description}>
+                          {exp.description}
+                        </div>
+                      </td>
+                      <td>
+                        <span className="badge badge-slate">{exp.category}</span>
+                      </td>
+                      <td>
+                        <span className="text-slate-500">
+                          {new Date(exp.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="font-bold text-slate-900">{formatCurrency(exp.amountConverted)}</span>
+                      </td>
+                      <td className="text-right">
                          {approval.status === "PENDING" ? (
                            <div className="flex items-center justify-end gap-2">
                              <button 
                                disabled={isActing} 
                                onClick={() => handleAction(exp.id, "REJECT")}
-                               className="p-2 text-danger bg-danger/10 hover:bg-danger/20 rounded-md transition-colors disabled:opacity-50"
+                               className="w-9 h-9 flex items-center justify-center text-red-500 bg-red-50 hover:bg-red-100 rounded-xl transition-all disabled:opacity-50"
                                title="Reject"
                              >
                                <X className="w-4 h-4" />
@@ -90,14 +111,14 @@ export default function ApprovalsPage() {
                              <button 
                                disabled={isActing} 
                                onClick={() => handleAction(exp.id, "APPROVE")}
-                               className="p-2 text-success bg-success/10 hover:bg-success/20 rounded-md transition-colors flex items-center gap-1 disabled:opacity-50"
+                               className="px-4 py-2 text-green-700 bg-green-100 hover:bg-green-200 rounded-xl transition-all flex items-center gap-1.5 disabled:opacity-50 font-semibold text-[13px]"
                              >
-                               {isActing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                               <span className="font-medium pr-1">Approve</span>
+                               {isActing && acting === exp.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                               Approve
                              </button>
                            </div>
                          ) : (
-                           <span className={`px-2 py-1 text-[11px] font-bold rounded flex w-fit ml-auto uppercase tracking-wider ${approval.status === 'APPROVED' ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'}`}>
+                           <span className={`badge ${approval.status === 'APPROVED' ? 'badge-green' : 'badge-red'}`}>
                              {approval.status}
                            </span>
                          )}

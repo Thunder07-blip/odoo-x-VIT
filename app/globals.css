@@ -1,22 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
   --color-primary: #581131;
+  --color-primary-dark: #430921;
+
+  /* Map indigo to maroon so hardcoded utility classes shift globally */
+  --color-indigo-50:  #fdf4f6;
+  --color-indigo-100: #fbeaef;
+  --color-indigo-200: #f5cdd8;
+  --color-indigo-300: #eea0b5;
+  --color-indigo-400: #e36a88;
+  --color-indigo-500: #d13d61;
+  --color-indigo-600: #b52648;
+  --color-indigo-700: #971a36;
+  --color-indigo-800: #7f1731;
+  --color-indigo-900: #581131;
+  --color-indigo-950: #430921;
+
+  /* Map purple to handle primary gradients */
+  --color-purple-500: #7f1731;
+  --color-purple-600: #430921;
+
   --color-primary-foreground: #ffffff;
-  --color-success: #16A34A;
-  --color-danger: #DC2626;
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
   --color-sidebar: #ffffff;
-  --color-app-bg: #F8FAFC;
+  --color-app-bg: #f8fafc;
   --font-inter: "Inter", sans-serif;
 }
 
 :root {
-  --background: var(--color-app-bg);
-  --foreground: #0F172A;
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --gradient-primary: linear-gradient(135deg, #7f1731, #581131);
+  --gradient-card: linear-gradient(135deg, rgba(88,17,49,0.03), rgba(67,9,33,0.03));
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.03);
+  --shadow-card-hover: 0 4px 24px rgba(0,0,0,0.07);
+  --shadow-soft: 0 2px 12px rgba(88,17,49,0.08);
 }
+
+* { box-sizing: border-box; }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ─── Premium Card System ─── */
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.card:hover { box-shadow: var(--shadow-card-hover); }
+
+/* ─── Gradient Button ─── */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(88,17,49,0.3);
+  transition: all 200ms ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(88,17,49,0.4);
+  transform: translateY(-1px);
+}
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.btn-secondary {
+  background: transparent;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-weight: 500;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.btn-secondary:hover { background: #f8fafc; border-color: #cbd5e1; color: #334155; }
+
+/* ─── Soft Inputs ─── */
+.input-soft {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #f1f5f9;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  color: #1e293b;
+  transition: all 200ms ease;
+  outline: none;
+}
+.input-soft:focus {
+  background: white;
+  border-color: #581131;
+  box-shadow: 0 0 0 3px rgba(88,17,49,0.1);
+}
+.input-soft::placeholder { color: #94a3b8; }
+
+/* ─── Pill Badges ─── */
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+.badge-green { background: #dcfce7; color: #15803d; }
+.badge-blue { background: #dbeafe; color: #1d4ed8; }
+.badge-red { background: #fee2e2; color: #dc2626; }
+.badge-amber { background: #fef3c7; color: #b45309; }
+.badge-purple { background: #fdf4f6; color: #971a36; }
+.badge-slate { background: #f1f5f9; color: #475569; }
+
+/* ─── Premium Table ─── */
+.table-premium { width: 100%; text-align: left; font-size: 14px; border-collapse: separate; border-spacing: 0; }
+.table-premium thead th { padding: 14px 20px; font-weight: 500; color: #94a3b8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #f1f5f9; }
+.table-premium tbody td { padding: 16px 20px; color: #475569; }
+.table-premium tbody tr { transition: background 200ms ease; }
+.table-premium tbody tr:hover { background: #fafbfe; }
+.table-premium tbody tr:not(:last-child) td { border-bottom: 1px solid #f8fafc; }
+
+/* ─── Sidebar Active ─── */
+.sidebar-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: 12px;
+  font-size: 14px; font-weight: 500;
+  color: #64748b; transition: all 200ms ease;
+  text-decoration: none;
+}
+.sidebar-link:hover { background: #f8fafc; color: #334155; }
+.sidebar-link-active {
+  background: var(--gradient-primary) !important;
+  color: white !important; font-weight: 600;
+  box-shadow: 0 2px 8px rgba(88,17,49,0.3);
+}
+
+/* ─── Page Header ─── */
+.page-header h1 { font-size: 28px; font-weight: 700; color: #1e293b; letter-spacing: -0.02em; }
+.page-header p { font-size: 14px; color: #94a3b8; margin-top: 4px; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ─── Animations ─── */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fade-in { animation: fadeIn 400ms ease forwards; }
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.animate-slide-up { animation: slideUp 500ms ease forwards; }
+
+/* Stagger children */
+.stagger > * { opacity: 0; animation: fadeIn 400ms ease forwards; }
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 60ms; }
+.stagger > *:nth-child(3) { animation-delay: 120ms; }
+.stagger > *:nth-child(4) { animation-delay: 180ms; }
+.stagger > *:nth-child(5) { animation-delay: 240ms; }
+.stagger > *:nth-child(6) { animation-delay: 300ms; }
