@@ -22,7 +22,7 @@ export async function GET(req: Request) {
 
     for (const exp of expenses) {
       totalAmount += exp.amountConverted;
-      if (exp.status === "PENDING" || exp.status === "IN_REVIEW" || exp.status === "SUBMITTED") pendingCount++;
+      if (exp.status === "DRAFT" || exp.status === "IN_REVIEW" || exp.status === "SUBMITTED") pendingCount++;
       if (exp.status === "APPROVED") approvedCount++;
       if (exp.status === "REJECTED") rejectedCount++;
 

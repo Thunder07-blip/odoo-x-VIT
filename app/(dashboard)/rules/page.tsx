@@ -100,7 +100,8 @@ export default function RulesPage() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in stagger relative">
+    <>
+      <div className="space-y-6 animate-fade-in stagger relative">
       <div className="flex justify-between items-center">
         <div className="page-header">
           <h1>Approval Policy Rules</h1>
@@ -169,13 +170,15 @@ export default function RulesPage() {
         )}
       </div>
 
+      </div>
+
       {/* ══════════ CREATE RULE MODAL ══════════ */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onClick={() => setShowModal(false)} />
-          <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-slate-100 w-full max-w-[680px] max-h-[90vh] overflow-y-auto relative z-10 animate-slide-up transform transition-all flex flex-col hide-scrollbar">
+          <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-slate-100 w-full max-w-[680px] max-h-[90vh] overflow-y-auto relative z-10 animate-slide-up flex flex-col hide-scrollbar">
             {/* Header */}
-            <div className="flex items-center justify-between px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10">
+            <div className="flex items-center justify-between px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10 rounded-t-2xl">
               <h2 className="text-[18px] font-bold text-slate-800">Create Approval Rule</h2>
               <button type="button" onClick={() => setShowModal(false)} className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors">
                 <X className="w-4 h-4" />
@@ -334,6 +337,6 @@ export default function RulesPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

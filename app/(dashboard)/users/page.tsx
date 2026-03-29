@@ -142,7 +142,8 @@ export default function UsersPage() {
   );
 
   return (
-    <div className="space-y-6 animate-fade-in stagger relative">
+    <>
+      <div className="space-y-6 animate-fade-in stagger relative">
       <div className="flex justify-between items-center">
         <div className="page-header">
           <h1>Workspace Users</h1>
@@ -214,12 +215,14 @@ export default function UsersPage() {
         )}
       </div>
 
+      </div>
+
       {/* CREATE MODAL */}
       {showCreate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onClick={() => setShowCreate(false)} />
-          <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-slate-100 w-full max-w-md relative z-10 animate-slide-up transform transition-all flex flex-col hide-scrollbar">
-            <div className="flex items-center justify-between px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10">
+          <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-slate-100 w-full max-w-md relative z-10 animate-slide-up flex flex-col hide-scrollbar">
+            <div className="flex items-center justify-between px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10 rounded-t-2xl">
               <h2 className="text-[18px] font-bold text-slate-800">Add New User</h2>
               <button type="button" onClick={() => setShowCreate(false)} className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"><X className="w-4 h-4" /></button>
             </div>
@@ -238,10 +241,10 @@ export default function UsersPage() {
 
       {/* EDIT MODAL */}
       {editUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onClick={() => setEditUser(null)} />
-          <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-slate-100 w-full max-w-md relative z-10 animate-slide-up transform transition-all flex flex-col hide-scrollbar">
-            <div className="flex items-center justify-between px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10">
+          <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-slate-100 w-full max-w-md relative z-10 animate-slide-up flex flex-col hide-scrollbar">
+            <div className="flex items-center justify-between px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10 rounded-t-2xl">
               <h2 className="text-[18px] font-bold text-slate-800">Edit User</h2>
               <button type="button" onClick={() => setEditUser(null)} className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"><X className="w-4 h-4" /></button>
             </div>
@@ -257,6 +260,6 @@ export default function UsersPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
