@@ -77,24 +77,30 @@ export default function ApprovalsPage() {
                       <td className="px-6 py-4 text-slate-500">{new Date(exp.date).toLocaleDateString()}</td>
                       <td className="px-6 py-4 font-bold">{formatCurrency(exp.amountConverted)}</td>
                       <td className="px-6 py-4 text-right">
-                         <div className="flex items-center justify-end gap-2">
-                           <button 
-                             disabled={isActing} 
-                             onClick={() => handleAction(exp.id, "REJECT")}
-                             className="p-2 text-danger bg-danger/10 hover:bg-danger/20 rounded-md transition-colors disabled:opacity-50"
-                             title="Reject"
-                           >
-                             <X className="w-4 h-4" />
-                           </button>
-                           <button 
-                             disabled={isActing} 
-                             onClick={() => handleAction(exp.id, "APPROVE")}
-                             className="p-2 text-success bg-success/10 hover:bg-success/20 rounded-md transition-colors flex items-center gap-1 disabled:opacity-50"
-                           >
-                             {isActing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                             <span className="font-medium pr-1">Approve</span>
-                           </button>
-                         </div>
+                         {approval.status === "PENDING" ? (
+                           <div className="flex items-center justify-end gap-2">
+                             <button 
+                               disabled={isActing} 
+                               onClick={() => handleAction(exp.id, "REJECT")}
+                               className="p-2 text-danger bg-danger/10 hover:bg-danger/20 rounded-md transition-colors disabled:opacity-50"
+                               title="Reject"
+                             >
+                               <X className="w-4 h-4" />
+                             </button>
+                             <button 
+                               disabled={isActing} 
+                               onClick={() => handleAction(exp.id, "APPROVE")}
+                               className="p-2 text-success bg-success/10 hover:bg-success/20 rounded-md transition-colors flex items-center gap-1 disabled:opacity-50"
+                             >
+                               {isActing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                               <span className="font-medium pr-1">Approve</span>
+                             </button>
+                           </div>
+                         ) : (
+                           <span className={`px-2 py-1 text-[11px] font-bold rounded flex w-fit ml-auto uppercase tracking-wider ${approval.status === 'APPROVED' ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'}`}>
+                             {approval.status}
+                           </span>
+                         )}
                       </td>
                     </tr>
                   );

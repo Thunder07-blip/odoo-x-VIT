@@ -9,9 +9,12 @@ export function Sidebar({ role }: { role: string }) {
   const pathname = usePathname();
 
   const links = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "My Expenses", href: "/expenses", icon: Receipt },
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard }
   ];
+
+  if (role !== "ADMIN") {
+    links.push({ name: "My Expenses", href: "/expenses", icon: Receipt });
+  }
 
   if (role === "MANAGER" || role === "ADMIN") {
     links.push({ name: "Approvals", href: "/approvals", icon: CheckSquare });

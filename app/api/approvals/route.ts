@@ -10,7 +10,6 @@ export async function GET(req: Request) {
     const approvals = await prisma.expenseApproval.findMany({
       where: {
         approverId: session.userId,
-        status: "PENDING",
       },
       include: {
         expense: {
