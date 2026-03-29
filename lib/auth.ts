@@ -16,3 +16,16 @@ export function signToken(payload: TokenPayload): string {
 export function verifyToken(token: string): TokenPayload {
   return jwt.verify(token, JWT_SECRET) as TokenPayload;
 }
+
+import { cookies } from "next/headers";
+
+export async function getSession(): Promise<TokenPayload | null> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  if (!token) return null;
+  try {
+    return verifyToken(token);
+  } catch {
+    return null;
+  }
+}
