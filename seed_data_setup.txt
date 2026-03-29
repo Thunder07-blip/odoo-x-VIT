@@ -1,0 +1,102 @@
+ SEED DATA (VERY IMPORTANT)
+
+Create file:
+
+prisma/seed.ts
+🌱 Seed Script
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+
+const prisma = new PrismaClient();
+
+async function main() {
+  const password = await bcrypt.hash("123456", 10);
+
+  const company = await prisma.company.create({
+    data: {
+      name: "DemoCorp",
+      country: "India",
+      currencyCode: "INR"
+    }
+  });
+
+  const admin = await prisma.user.create({
+    data: {
+      name: "Admin",
+      email: "admin@demo.com",
+      passwordHash: password,
+      role: "ADMIN",
+      companyId: company.id
+    }
+  });
+
+  const manager = await prisma.user.create({
+    data: {
+      name: "Manager",
+      email: "manager@demo.com",
+      passwordHash: password,
+      role: "MANAGER",
+      companyId: company.id
+    }
+  });
+
+  const employee = await prisma.user.create({
+    data: {
+      name: "Employee",
+      email: "employee@demo.com",
+      passwordHash: password,
+      role: "EMPLOYEE",
+      companyId: company.id,
+      managerId: manager.id
+    }
+  });
+
+  console.log("Seed data created 🚀");
+}
+
+main();
+▶️ Run seed
+npx prisma db seed
+🧪 PART 4: TEST CASES (VERY IMPORTANT)
+🔐 AUTH TEST
+✅ Valid login
+Expect: token returned
+❌ Wrong password
+Expect: error
+👥 USER TEST
+Create user
+Check DB insert
+Check role assigned
+💸 EXPENSE TEST
+Submit expense
+Status = SUBMITTED
+Entry created
+🔥 APPROVAL ENGINE TEST
+Case 1: Sequential
+Manager approves
+Next approver unlocked
+Case 2: Required reject
+Required approver rejects
+👉 Expense = REJECTED
+Case 3: Percentage
+2/3 approve
+Threshold = 50%
+👉 APPROVED
+🤖 OCR TEST
+Upload receipt
+Expect JSON output
+🧠 TESTING STRATEGY (IMPORTANT)
+
+For EACH feature:
+
+Call API
+Check response
+Check DB
+Test edge cases
+⚠️ COMMON BUG CHECKS
+❌ Token missing → 401
+❌ Wrong role → 403
+❌ Invalid data → 400
+❌ DB not updated → bug
+🏆 FINAL FLOW YOU SHOULD FOLLOW
+Build API → Test in Postman → Fix → Move next
