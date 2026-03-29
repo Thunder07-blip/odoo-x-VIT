@@ -34,8 +34,27 @@ export default function LoginPage() {
     }
   };
 
+  const loginAs = async (email: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: "123456" })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to login");
+      toast.success(`Logged in as ${email.split('@')[0]}`);
+      router.push("/dashboard");
+    } catch (err: any) {
+      toast.error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-app-bg px-4">
+    <div className="min-h-screen flex items-center justify-center bg-app-bg px-4 py-8">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-sm border border-slate-100">
         <div className="text-center mb-8">
           <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4">
@@ -76,8 +95,20 @@ export default function LoginPage() {
             Sign In
           </button>
         </form>
+
+        <div className="mt-8">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200"></div></div>
+            <div className="relative flex justify-center text-sm"><span className="px-2 bg-white text-slate-500 font-medium">Fast Demo Login</span></div>
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            <button type="button" onClick={() => loginAs("employee@demo.com")} disabled={loading} className="text-xs bg-slate-50 border border-slate-200 hover:bg-slate-100 hover:border-slate-300 text-slate-700 py-2.5 rounded-md font-medium transition-colors disabled:opacity-50">Employee</button>
+            <button type="button" onClick={() => loginAs("manager@demo.com")} disabled={loading} className="text-xs bg-slate-50 border border-slate-200 hover:bg-slate-100 hover:border-slate-300 text-slate-700 py-2.5 rounded-md font-medium transition-colors disabled:opacity-50">Manager</button>
+            <button type="button" onClick={() => loginAs("admin@demo.com")} disabled={loading} className="text-xs bg-slate-50 border border-slate-200 hover:bg-slate-100 hover:border-slate-300 text-slate-700 py-2.5 rounded-md font-medium transition-colors disabled:opacity-50">Admin</button>
+          </div>
+        </div>
         
-        <div className="mt-6 text-center text-sm text-slate-500">
+        <div className="mt-6 pt-6 border-t border-slate-100 text-center text-sm text-slate-500">
           Don't have an account? <Link href="/signup" className="text-primary hover:underline font-medium">Create workspace</Link>
         </div>
       </div>
